@@ -232,18 +232,18 @@ contract bank {
     }
 
     // Name
-    function name() public view returns (string memory) {
+    function name() public pure returns (string memory) {
         return "SGDz Bank";
     }
 
     // Symbol
-    function symbol() public view returns (string memory) {
+    function symbol() public pure returns (string memory) {
         return "SGDz";
     }
 
     // Decimals, returns the token decimals
     // TODO: Change this portion to return the actual decimal of the token.
-    function decimals() public view returns (uint8) {
+    function decimals() public pure returns (uint8) {
         // return uint8(ERC20(address(token)).decimals());
         return 0;
     }
@@ -265,7 +265,7 @@ contract bank {
     // TODO: Implement allowance. Allow other contracts to transfer on behalf of the UEN.
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
-    function allowance(address _owner, address _spender) public view returns (uint256) {
+    function allowance() public pure returns (uint256) {
         return 0;
     }
 }

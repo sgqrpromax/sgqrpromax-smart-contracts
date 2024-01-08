@@ -215,7 +215,7 @@ contract sgdm is ERC20 {
     }
 
     // Decimals
-    function decimals() public view override returns (uint8) {
+    function decimals() public pure override returns (uint8) {
         return 6;
     }
 
@@ -232,13 +232,13 @@ contract sgdm is ERC20 {
     }
 
     // Function for allowance. This should return the allowance for token.
-    function allowance(address _owner, address _spender) external view override returns (uint256) {
-        uint256 memory _amount = token.allowance(_owner, _spender);
+    function allowance(address _owner, address _spender) public view override returns (uint256) {
+        uint256 _amount = token.allowance(_owner, _spender);
         return _amount;
     }
 
     // Function for approval. This should approve the spender to spend the amount of tokens.
-    function approve(address _spender, uint256 _amount) external override returns (bool) {
+    function approve(address _spender, uint256 _amount) public override returns (bool) {
         token.approve(_spender, _amount);
         return true;
     }
