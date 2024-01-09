@@ -34,11 +34,6 @@ interface Iadmin_management {
 }
 
 contract sgdm is ERC20 {
-	/*
-	
-
-
-	*/
 
 	// Contains the ERC20 target token address. This has to be an ERC20. 
 	IERC20 public targetToken;
@@ -205,8 +200,7 @@ contract sgdm is ERC20 {
 
 	// Decimals
 	function decimals() public pure override returns (uint8) {
-		// return 6; // change to this after testing is complete with zeenus token
-		return 0;
+		return 6;
 	}
 
 	// Total supply, returns the token total supply
