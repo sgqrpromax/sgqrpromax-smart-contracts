@@ -113,11 +113,6 @@ contract sgdm is ERC20 {
 		return whitelist_contract.get_whitelist_to_uen(msg.sender);
 	}
 
-	// Check ERC20 allowance
-	function check_allowance(address _address) external view returns (uint256) {
-		return targetToken.allowance(_address, address(this));
-	}
-
 	// Balance of UEN
 	function balance_of_uen(string memory _uen) external view returns (uint256) {
 		return uen_to_balance[_uen];
@@ -189,6 +184,20 @@ contract sgdm is ERC20 {
 		return true;
 	}
 
+	// Transfer from, this is an internal transfer function.
+	function transferFrom(address _from, address _to, uint256 _amount) public override returns (bool) {
+		require(_to != address(0), "Transfer to zero address");
+		string memory _uen_sender = whitelist_contract.get_whitelist_to_uen(_from);
+		
+		uint256 _balance = uen_to_balance[_uen_sender];
+		require (_balance >= _amount, "Not enough balance");
+		
+		uen_to_balance[_uen_sender] -= _amount;
+		emit Transfer(_from, _to, _amount);
+		targetToken.transfer(_to, _amount);
+		return true;
+	}
+
 	// Return token address
 	function token_address() external view returns (address) {
 		return address(targetToken);
@@ -196,7 +205,8 @@ contract sgdm is ERC20 {
 
 	// Decimals
 	function decimals() public pure override returns (uint8) {
-		return 6;
+		// return 6; // change to this after testing is complete with zeenus token
+		return 0;
 	}
 
 	// Total supply, returns the token total supply
@@ -213,13 +223,11 @@ contract sgdm is ERC20 {
 
 	// Function for allowance. This should return the allowance for token.
 	function allowance(address _owner, address _spender) public view override returns (uint256) {
-		uint256 _amount = targetToken.allowance(_owner, _spender);
-		return _amount;
+		return targetToken.allowance(_owner, _spender);
 	}
 
-	// Function for approval. This should approve the spender to spend the amount of tokens.
-	function approve(address _spender, uint256 _amount) public override returns (bool) {
-		targetToken.approve(_spender, _amount);
-		return true;
+	// Function for approval. This always return false to prevent anyone from using sgdm.
+	function approve(address, uint256) public pure override returns (bool) {
+    	revert("Approve function is disabled");
 	}
 }
