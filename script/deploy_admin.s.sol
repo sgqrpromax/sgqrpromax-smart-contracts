@@ -7,7 +7,8 @@ import {admin_management} from "../src/admin.sol";
 
 contract DeployAdminManagement is Script {
     function run() external returns (address) {
-        vm.startBroadcast();
+		uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        vm.startBroadcast(deployerPrivateKey);
         admin_management adminManagement = new admin_management();
         vm.stopBroadcast();
         return address(adminManagement);

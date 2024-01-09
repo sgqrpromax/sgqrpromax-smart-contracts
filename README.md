@@ -1,66 +1,8 @@
-## Foundry
-
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+### Deployed contracts (XRPL EVM)
+* SGDk: 0xa462f79a8c09a0770614140B9f53Ebc9fD8413b5
+* UEN Management (UEN Database): 0x228dfCFf73CcF0a65034aA55621122a5aaD49FE7
+  * Admin Management of UEN Management: 0x0500982F88Cb1d6eDf1F5aa103c1d60938111330
+* Whitelist: 0xeC6a51D2025234A1fd6F81EddC383c17C1c95A21
+  * Admin Management of Whitelist: 0x7ED28E99C8eA2D010d51daEd5526378Fe73A26B1
+* SGDm: 0x1F11B837513dF2F3e17D5b017f83C5c17C76261f
+  * Admin Management of SGDm: 0xD51B80cCA2e8C961f6bEd37882c0570C4891f8f8
