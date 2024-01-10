@@ -16,5 +16,3 @@ Rename env.txt to .env which includes a prefunded account that also has admin ri
 | ----------- | ----------- |
 | `202323489D` | `0x94DECA7D44af312256e88891c9fcdF40D61CA918` | `AGZ FOOD PTE LTD` | `129e303eec3e6b6ddbb8dd668816f4f79bdd9679923eb78d56f23792d084d111` | `table obtain ship purse entire recall vendor olympic keen angry genius bounce` |
 | `198402065R` | `0x1dF6bE628F34a964AcFb695CD9F5417DBc95ff42` | `ALL WATCHES PTE LTD` | `1465ef7ce4ee81fdef9e854e51b97013c1ff740dfd494ddbbb60176c999f581f` |
-
-ankle judge shine lens throw vault slide radar over razor car indoor

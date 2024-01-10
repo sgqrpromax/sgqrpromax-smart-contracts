@@ -15,3 +15,6 @@ docs/
 
 # venv files
 .venv/
+
+# others
+.DS_Store
