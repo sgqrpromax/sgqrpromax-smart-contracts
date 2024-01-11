@@ -49,26 +49,10 @@
 		},
 		"gasEstimates": null,
 		"methodIdentifiers": {
-			"add_admins(address[])": "3ca00ed2",
-			"get_admins()": "8794b69d",
-			"remove_admin(address[])": "e13e95eb",
-			"remove_admin_by_index(uint256[])": "843eedee"
+			"get_admins()": "8794b69d"
 		}
 	},
 	"abi": [
-		{
-			"inputs": [
-				{
-					"internalType": "address[]",
-					"name": "_newAdmins",
-					"type": "address[]"
-				}
-			],
-			"name": "add_admins",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
 		{
 			"inputs": [],
 			"name": "get_admins",
@@ -80,32 +64,6 @@
 				}
 			],
 			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address[]",
-					"name": "_admins",
-					"type": "address[]"
-				}
-			],
-			"name": "remove_admin",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256[]",
-					"name": "_indexes",
-					"type": "uint256[]"
-				}
-			],
-			"name": "remove_admin_by_index",
-			"outputs": [],
-			"stateMutability": "nonpayable",
 			"type": "function"
 		}
 	]

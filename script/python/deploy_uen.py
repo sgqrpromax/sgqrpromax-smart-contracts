@@ -166,4 +166,5 @@ class deploy_uen_management:
 		click.echo(f"You are connected to EVM network with ID '{chain_id}'.")
 
 if __name__ == "__main__":
-	deploy_uen_management(automatic=True, use_sample=False)
+	instance = deploy_uen_management(automatic=False, use_sample=False)
+	instance.get_all_uen()
