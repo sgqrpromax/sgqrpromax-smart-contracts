@@ -26,14 +26,7 @@ interface Iuen_management {
 	function get_all_uens() external view returns (string[] memory);
 }
 
-interface Iadmin_management {
-	/*
-	This interface is used to manage the admin list of who can manage this bank contract.
-	*/
-	function get_admins() external view returns (address[] memory);
-}
-
-contract sgdm is ERC20 {
+contract sgdm is ERC20, Ownable {
 
 	// Contains the ERC20 target token address. This has to be an ERC20. 
 	IERC20 public targetToken;
@@ -41,17 +34,13 @@ contract sgdm is ERC20 {
 	// Mapping of UEN to amount of tokens they contain. 
 	mapping(string => uint256) public uen_to_balance;
 
-	// Contains the list of admins for this contract. 
-	Iadmin_management admin_management_contract;
-	address[] public admins;
-
 	// Contains the list of UEN
 	Iuen_management uen_management_contract;
 
 	// Contains the contract of the mapping of the UEN to the whitelisted address. This can also query whitelisted address to UEN.
 	Iwhitelist whitelist_contract;
 
-	constructor (address _targetToken, address _uen_management_contract_address, address _admin_management_contract_address, address _whitelist_management_contract_address) ERC20 ("SGDm", "SGDm") {
+	constructor (address _targetToken, address _uen_management_contract_address, address _initialOwner, address _whitelist_management_contract_address) ERC20 ("SGDm", "SGDm") Ownable(_initialOwner) {
 		
 		// Specify the token to use
 		targetToken = IERC20(_targetToken);
@@ -59,26 +48,8 @@ contract sgdm is ERC20 {
 		// UEN management contract
 		uen_management_contract = Iuen_management(_uen_management_contract_address);
 
-		// Admin management for this contract
-		admin_management_contract = Iadmin_management(_admin_management_contract_address);
-		admins = admin_management_contract.get_admins();
-
 		// Whitelist management contract
 		whitelist_contract = Iwhitelist(_whitelist_management_contract_address);
-	}
-
-	// Check if the caller is an admin. This is a modifier which is called before a function call. This will prevent non-admins from calling the function.
-	// TODO: Change this portion to a proper permissions system.
-	modifier only_admin {
-		bool is_owner = false;
-		for (uint i = 0; i < admins.length; i++) {
-			if (msg.sender == admins[i]) {
-				is_owner = true;
-				break;
-			}
-		}
-		require(is_owner, "Only admins can call this function");
-		_;
 	}
 	
 	// Get name of the UEN. This is a public function. If no name exists, break.
@@ -88,7 +59,7 @@ contract sgdm is ERC20 {
 	}
 
 	// Function for admins to withdraw tokens from the contract. This is essentially a withdraw function.
-	function admin_withdraw(address _to, uint256 _amount) external only_admin returns (bool) {
+	function admin_withdraw(address _to, uint256 _amount) external onlyOwner returns (bool) {
 		require(_to != address(0), "Withdraw to the zero address");
 		
 		uint256 _balance = targetToken.balanceOf(address(this));

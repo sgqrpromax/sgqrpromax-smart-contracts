@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: Proprietary
 pragma solidity 0.8.22;
 
-interface Iadmin_management {
-    function get_admins() external view returns (address[] memory);
-}
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 interface Iuen_management {
     /* This interface describes the UEN management contract. */
@@ -14,12 +12,11 @@ interface Iuen_management {
     function modify_uens(string[] memory _uens, string[] memory _names) external;
 }
 
-contract uen_management {
+contract uen_management is Ownable {
     /*
     This contract is used to manage the UENs.
     Refers to the admin management contract to get the list of admins.
     TODO: Add indexed to emitted events.
-    TODO: Replace admin contract with a proper access control contract.
     */
 
     // Contains all the UENs.
@@ -34,35 +31,12 @@ contract uen_management {
     // Admin list contract address.
     address public admin_list_contract;
 
-    // Interface of the admin management contract.
-    Iadmin_management public get_admin_list_contract;
-
     // Contains the list of admins.
     address[] public admins;
 
     // Add deployer to owner during deployment.
-    constructor(address _admin_list_contract) {
-        admin_list_contract = _admin_list_contract;
-        get_admin_list_contract = Iadmin_management(_admin_list_contract);
-        admins = get_admin_list_contract.get_admins();
-    }
+    constructor(address _initialOwner) Ownable(_initialOwner) {
 
-    // Check if the caller is an admin. This is a modifier which is called before a function call. This will prevent non-admins from calling the function.
-    modifier only_admin() {
-        bool is_owner = false;
-        for (uint256 i = 0; i < admins.length; i++) {
-            if (msg.sender == admins[i]) {
-                is_owner = true;
-                break;
-            }
-        }
-        require(is_owner, "Only admins can call this function");
-        _;
-    }
-
-    // Get list of admins. This is a public function.
-    function get_admin_contract() public view returns (address) {
-        return admin_list_contract;
     }
 
     // Get UEN from the list. This is a public function.
@@ -81,7 +55,7 @@ contract uen_management {
     */
     event uen_event(string[] _uens, string _message);
 
-    function add_uens(string[] memory _uens, string[] memory _names) external only_admin {
+    function add_uens(string[] memory _uens, string[] memory _names) external onlyOwner {
         require(_uens.length == _names.length, "Mappings must have the same length");
         for (uint256 i = 0; i < _uens.length; i++) {
             require(bytes(uen_to_name[_uens[i]]).length == 0, "UEN already exists");
@@ -95,12 +69,11 @@ contract uen_management {
     /* Remove UEN and name from the list. This is an admin only function. 
     This accepts an array of UENs as the input.
     */
-    function remove_uens(string[] memory _uens) external only_admin {
+    function remove_uens(string[] memory _uens) external onlyOwner {
         for (uint256 i = 0; i < _uens.length; i++) {
             delete uen_to_name[_uens[i]];
             /*
-    Replace the UEN with an empty string since we cannot delete the element 
-    from the array as the array will be shifted which will affect the uen_to_index mapping.
+    		Replace the UEN with an empty string since we cannot delete the element from the array as the array will be shifted which will affect the uen_to_index mapping.
             */
             uen_list[uen_to_index[_uens[i]]] = "";
             delete uen_to_index[_uens[i]];
@@ -115,12 +88,11 @@ contract uen_management {
     the UENs will be shifted in the array which will affect the uen_to_index mapping. 
     It's also recommended to get the UENs from the get_all_uens function and then modify the names to prevent errors.
     */
-    function modify_uens(string[] memory _uens, string[] memory _names) external only_admin {
+    function modify_uens(string[] memory _uens, string[] memory _names) external onlyOwner {
         require(_uens.length == _names.length, "Mappings must have the same length");
         for (uint256 i = 0; i < _uens.length; i++) {
             require(bytes(uen_to_name[_uens[i]]).length != 0, "UEN does not exist");
             uen_to_name[_uens[i]] = _names[i];
         }
     }
-    // emit uen_event(_uens, "UENs modified");
 }

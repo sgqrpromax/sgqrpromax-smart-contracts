@@ -37,12 +37,12 @@ anvil :; anvil -m 'test test test test test test test test test test test junk' 
 
 NETWORK_ARGS := --rpc-url http://localhost:8545 --private-key $(DEFAULT_ANVIL_KEY) --broadcast
 
-ifeq ($(findstring --network xrpl,$(ARGS)),--network xrpl)
-	NETWORK_ARGS := --rpc-url $(XRPL_EVM_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast
+ifeq ($(findstring --network mumbai,$(ARGS)),--network mumbai)
+	NETWORK_ARGS := --rpc-url $(MUMBAI_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast
 endif
 
-ifeq ($(findstring --network sepolia,$(ARGS)),--network sepolia)
-	NETWORK_ARGS := --rpc-url $(SEPOLIA_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast --verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvvv
+ifeq ($(findstring --network polygon,$(ARGS)),--network polygon)
+	NETWORK_ARGS := --rpc-url $(POLYGON_MAINNET_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast
 endif
 
 deployAdmin:
