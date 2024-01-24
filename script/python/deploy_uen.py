@@ -9,7 +9,7 @@ class deploy_uen_management:
 	def __init__(
 			self,
 			network_rpc: str = "https://rpc-evm-sidechain.xrpl.org",
-			sender: str = "0x1465ef7ce4ee81fdef9e854e51b97013c1ff740dfd494ddbbb60176c999f581f", # ALL WATCHES PTE LTD admin account
+			sender: str = "${PRIVATE_KEY}", # ALL WATCHES PTE LTD admin account
 			instance_address: str = "0x228dfCFf73CcF0a65034aA55621122a5aaD49FE7",
 			abi_path: str = "../../abi/uen_management.json",
 			limit: int = 200,
